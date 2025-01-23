@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     namespace :admin do
       resources :categories do
         resources :products
+        resources :customizations
       end
     end
   end

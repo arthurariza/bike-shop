@@ -13,3 +13,8 @@ bicycles = Category.find_or_create_by!(name: 'Bicycles')
 Product.find_or_create_by!(name: 'Road Bike', category: bicycles, in_stock: true, price: "1000.00")
 Product.find_or_create_by!(name: 'Mountain Bike', category: bicycles, in_stock: true, price: "1200.00")
 Product.find_or_create_by!(name: 'BMX', category: bicycles, in_stock: true, price: "900.00")
+
+Customization.find_or_create_by!(name: 'Color', category: bicycles)
+Customization.find_or_create_by!(name: 'Wheel Size', category: bicycles)
+Customization.find_or_create_by!(name: 'Frame Material', category: bicycles)
+Customization.find_or_create_by!(name: 'Suspension', category: bicycles)
