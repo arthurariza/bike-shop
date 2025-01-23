@@ -4,18 +4,18 @@ class V1::Admin::CategoriesController < ApplicationController
   def index
     @categories = Category.all
 
-    render json: @categories
+    render json: @categories, each_serializer: V1::CategorySerializer
   end
 
   def show
-    render json: @category
+    render json: @category, serializer: V1::CategorySerializer
   end
 
   def create
     @category = Category.new(category_params)
 
     if @category.save
-      render json: @category, status: :created
+      render json: @category, status: :created, serializer: V1::CategorySerializer
     else
       render json: @category.errors, status: :unprocessable_entity
     end
@@ -23,7 +23,7 @@ class V1::Admin::CategoriesController < ApplicationController
 
   def update
     if @category.update(category_params)
-      render json: @category
+      render json: @category, serializer: V1::CategorySerializer
     else
       render json: @category.errors, status: :unprocessable_entity
     end
