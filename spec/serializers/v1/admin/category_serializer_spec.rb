@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe V1::CategorySerializer, type: :serializer do
+RSpec.describe V1::Admin::CategorySerializer, type: :serializer do
   let(:category) { build(:category) }
   let(:serializer) { described_class.new(category) }
   let(:serialization) { ActiveModelSerializers::Adapter.create(serializer) }

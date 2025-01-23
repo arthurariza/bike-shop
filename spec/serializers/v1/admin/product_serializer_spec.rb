@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe V1::ProductSerializer, type: :serializer do
+RSpec.describe V1::Admin::ProductSerializer, type: :serializer do
   let(:category) { create(:category) }
   let(:product) { build(:product, category: category) }
   let(:serializer) { described_class.new(product) }

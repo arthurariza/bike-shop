@@ -5,18 +5,18 @@ class V1::Admin::ProductsController < ApplicationController
   def index
     @products = @category.products.order(:name)
 
-    render json: @products, each_serializer: V1::ProductSerializer
+    render json: @products, each_serializer: V1::Admin::ProductSerializer
   end
 
   def show
-    render json: @product, serializer: V1::ProductSerializer
+    render json: @product, serializer: V1::Admin::ProductSerializer
   end
 
   def create
     @product = @category.products.new(product_params)
 
     if @product.save
-      render json: @product, status: :created, serializer: V1::ProductSerializer
+      render json: @product, status: :created, serializer: V1::Admin::ProductSerializer
     else
       render json: @product.errors, status: :unprocessable_entity
     end
@@ -24,7 +24,7 @@ class V1::Admin::ProductsController < ApplicationController
 
   def update
     if @product.update(product_params)
-      render json: @product, serializer: V1::ProductSerializer
+      render json: @product, serializer: V1::Admin::ProductSerializer
     else
       render json: @product.errors, status: :unprocessable_entity
     end
