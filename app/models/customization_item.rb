@@ -5,6 +5,7 @@ class CustomizationItem < ApplicationRecord
   validates :price, numericality: { greater_than_or_equal_to: 0 }
 
   belongs_to :customization
+  has_many :prohibited_combinations, dependent: :destroy
 
   def price=(value)
     super(BigDecimal(value))

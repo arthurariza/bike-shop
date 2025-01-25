@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_23_215874) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_25_202323) do
   create_table "categories", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", null: false
@@ -45,7 +45,19 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_23_215874) do
     t.index ["category_id"], name: "index_products_on_category_id"
   end
 
+  create_table "prohibited_combinations", force: :cascade do |t|
+    t.integer "customization_item_id", null: false
+    t.integer "prohibited_item_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["customization_item_id", "prohibited_item_id"], name: "index_prohibited_combinations_uniqueness", unique: true
+    t.index ["customization_item_id"], name: "index_prohibited_combinations_on_customization_item_id"
+    t.index ["prohibited_item_id"], name: "index_prohibited_combinations_on_prohibited_item_id"
+  end
+
   add_foreign_key "customization_items", "customizations"
   add_foreign_key "customizations", "categories"
   add_foreign_key "products", "categories"
+  add_foreign_key "prohibited_combinations", "customization_items"
+  add_foreign_key "prohibited_combinations", "customization_items", column: "prohibited_item_id"
 end

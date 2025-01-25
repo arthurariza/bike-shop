@@ -12,6 +12,7 @@ RSpec.describe CustomizationItem, type: :model do
 
   describe 'associations' do
     it { is_expected.to belong_to(:customization) }
+    it { is_expected.to have_many(:prohibited_combinations).dependent(:destroy) }
   end
 
   describe '#price=' do

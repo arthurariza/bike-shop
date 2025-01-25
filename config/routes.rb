@@ -9,6 +9,8 @@ Rails.application.routes.draw do
       resources :customizations, only: [] do
         resources :customization_items
       end
+
+      resources :prohibited_combinations, only: [ :index, :show, :create, :destroy ]
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
