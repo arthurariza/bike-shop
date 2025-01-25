@@ -5,6 +5,10 @@ Rails.application.routes.draw do
         resources :products
         resources :customizations
       end
+
+      resources :customizations, only: [] do
+        resources :customization_items
+      end
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

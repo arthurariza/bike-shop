@@ -10,11 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_23_215653) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_23_215874) do
   create_table "categories", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "customization_items", force: :cascade do |t|
+    t.string "name", null: false
+    t.decimal "price", precision: 17, scale: 2, null: false
+    t.boolean "in_stock", default: true
+    t.integer "customization_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["customization_id"], name: "index_customization_items_on_customization_id"
   end
 
   create_table "customizations", force: :cascade do |t|
@@ -35,6 +45,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_23_215653) do
     t.index ["category_id"], name: "index_products_on_category_id"
   end
 
+  add_foreign_key "customization_items", "customizations"
   add_foreign_key "customizations", "categories"
   add_foreign_key "products", "categories"
 end
