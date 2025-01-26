@@ -5,6 +5,8 @@ class Product < ApplicationRecord
   validates :price, numericality: { greater_than_or_equal_to: 0 }
 
   belongs_to :category
+  has_many :customizations, through: :category
+  has_many :customization_items, through: :customizations
 
   def price=(value)
     super(BigDecimal(value))

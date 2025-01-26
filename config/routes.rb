@@ -13,6 +13,8 @@ Rails.application.routes.draw do
       resources :prohibited_combinations, only: [ :index, :show, :create, :destroy ]
       resources :customization_item_stocks, only: [ :update ]
     end
+
+    resources :products, only: [ :index, :show ]
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
