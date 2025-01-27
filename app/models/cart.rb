@@ -17,4 +17,12 @@ class Cart < ApplicationRecord
 
     cart || Cart.create!(total_price: "0")
   end
+
+  def update_total_price
+    total_price = cart_items.joins("LEFT JOIN products ON products.id = cart_items.purchasable_id AND cart_items.purchasable_type = 'Product'")
+      .joins("LEFT JOIN customization_items ON customization_items.id = cart_items.purchasable_id AND cart_items.purchasable_type = 'CustomizationItem'")
+      .sum("COALESCE(products.price, 0) + COALESCE(customization_items.price, 0)")
+
+    update(total_price:)
+  end
 end

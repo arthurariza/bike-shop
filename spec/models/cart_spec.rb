@@ -36,4 +36,37 @@ RSpec.describe Cart, type: :model do
       expect(item).to be_invalid
     end
   end
+
+  describe '#update_total_price' do
+    let(:cart) { create(:cart) }
+    let(:product) { create(:product, price: 100) }
+    let(:customization) { create(:customization_item, price: 50) }
+
+    it 'updates total_price to 0 for empty cart' do
+      cart.update_total_price
+      expect(cart.reload.total_price).to eq(0)
+    end
+
+    it 'correctly sums multiple products' do
+      create_list(:cart_item, 2, cart: cart, purchasable: product)
+
+      cart.update_total_price
+      expect(cart.reload.total_price).to eq(200)
+    end
+
+    it 'correctly sums multiple customization items' do
+      create_list(:cart_item, 2, cart: cart, purchasable: customization)
+
+      cart.update_total_price
+      expect(cart.reload.total_price).to eq(100)
+    end
+
+    it 'correctly sums mixed products and customization items' do
+      create(:cart_item, cart: cart, purchasable: product)
+      create(:cart_item, cart: cart, purchasable: customization)
+
+      cart.update_total_price
+      expect(cart.reload.total_price).to eq(150)
+    end
+  end
 end
