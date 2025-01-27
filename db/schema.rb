@@ -10,7 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_25_202323) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_26_225443) do
+  create_table "cart_items", force: :cascade do |t|
+    t.integer "cart_id", null: false
+    t.string "purchasable_type", null: false
+    t.integer "purchasable_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cart_id"], name: "index_cart_items_on_cart_id"
+    t.index ["purchasable_type", "purchasable_id"], name: "index_cart_items_on_purchasable"
+  end
+
+  create_table "carts", force: :cascade do |t|
+    t.decimal "total_price", precision: 17, scale: 2, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "categories", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", null: false
@@ -55,6 +71,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_25_202323) do
     t.index ["prohibited_item_id"], name: "index_prohibited_combinations_on_prohibited_item_id"
   end
 
+  add_foreign_key "cart_items", "carts"
   add_foreign_key "customization_items", "customizations"
   add_foreign_key "customizations", "categories"
   add_foreign_key "products", "categories"

@@ -1,4 +1,4 @@
-class CreateProhibitedCombinations < ActiveRecord::Migration[7.1]
+class CreateProhibitedCombinations < ActiveRecord::Migration[8.0]
   def change
     create_table :prohibited_combinations do |t|
       t.references :customization_item, null: false, foreign_key: { to_table: :customization_items }

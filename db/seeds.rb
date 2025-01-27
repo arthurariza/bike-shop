@@ -10,7 +10,7 @@
 
 bicycles = Category.find_or_create_by!(name: 'Bicycles')
 
-Product.find_or_create_by!(name: 'Road Bike', category: bicycles, in_stock: true, price: "1000.00")
+road_bike = Product.find_or_create_by!(name: 'Road Bike', category: bicycles, in_stock: true, price: "1000.00")
 Product.find_or_create_by!(name: 'Mountain Bike', category: bicycles, in_stock: true, price: "1200.00")
 Product.find_or_create_by!(name: 'BMX', category: bicycles, in_stock: true, price: "900.00")
 
@@ -34,3 +34,10 @@ ProhibitedCombination.find_or_create_by!(customization_item: twenty_six_wheel_si
 ProhibitedCombination.find_or_create_by!(customization_item: aluminum_frame_material, prohibited_item: twenty_nine_wheel_size)
 ProhibitedCombination.find_or_create_by!(customization_item: high_suspension, prohibited_item: blue_color)
 ProhibitedCombination.find_or_create_by!(customization_item: carbon_fiber_frame_material, prohibited_item: blue_color)
+
+cart = Cart.first || Cart.create!(total_price: 0)
+
+cart.cart_items.create!(purchasable: road_bike)
+cart.cart_items.create!(purchasable: red_color)
+cart.cart_items.create!(purchasable: twenty_six_wheel_size)
+cart.cart_items.create!(purchasable: low_suspension)
