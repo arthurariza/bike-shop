@@ -35,5 +35,10 @@ RSpec.shared_examples "purchasable" do
       expect(model.price).to be_nil
       expect(model).to be_invalid
     end
+
+    it 'handles high precision decimal values correctly' do
+      model.price = '999.99'
+      expect(model.price).to eq(BigDecimal('999.99'))
+    end
   end
 end

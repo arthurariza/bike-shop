@@ -35,6 +35,12 @@ RSpec.describe Cart, type: :model do
       expect(item.total_price).to be_nil
       expect(item).to be_invalid
     end
+
+    it 'handles high precision decimal values correctly' do
+      item = Cart.new
+      item.total_price = '999.99'
+      expect(item.total_price).to eq(BigDecimal('999.99'))
+    end
   end
 
   describe '#update_total_price' do

@@ -12,7 +12,7 @@ module Purchasable
   end
 
   def price=(value)
-    super(BigDecimal(value))
+    super(BigDecimal(value, Float::DIG))
   rescue ArgumentError, TypeError
     super(nil)
   end

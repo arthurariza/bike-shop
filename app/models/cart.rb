@@ -4,7 +4,7 @@ class Cart < ApplicationRecord
   validates :total_price, presence: true, numericality: { greater_than_or_equal_to: 0 }
 
   def total_price=(value)
-    super(BigDecimal(value))
+    super(BigDecimal(value, Float::DIG))
   rescue ArgumentError, TypeError
     super(nil)
   end
