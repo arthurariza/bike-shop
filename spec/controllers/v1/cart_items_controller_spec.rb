@@ -100,4 +100,56 @@ RSpec.describe V1::CartItemsController, type: :controller do
       end
     end
   end
+
+  describe 'DELETE #destroy' do
+    let(:cart) { create(:cart) }
+    let(:cart_item) { create(:cart_item, cart: cart) }
+
+    before do
+      allow(Cart).to receive_message_chain(:includes, :current_cart).and_return(cart)
+    end
+
+    context 'when cart item exists' do
+      before do
+        allow(Cart::RemovePurchasableService).to receive(:call).and_return(cart)
+      end
+
+      it 'returns success response' do
+        delete :destroy, params: { id: cart_item.id }
+
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'calls the service with correct parameters' do
+        expect(Cart::RemovePurchasableService).to receive(:call).with(cart, cart_item)
+
+        delete :destroy, params: { id: cart_item.id }
+      end
+
+      it 'returns serialized cart' do
+        delete :destroy, params: { id: cart_item.id }
+
+        expect(response.body).to eq(V1::CartSerializer.new(cart).to_json)
+      end
+    end
+
+    context 'when cart item does not exist' do
+      it 'returns not found status' do
+        delete :destroy, params: { id: 999999 }
+
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+
+    context 'when cart item belongs to different cart' do
+      let(:other_cart) { create(:cart) }
+      let(:other_cart_item) { create(:cart_item, cart: other_cart) }
+
+      it 'returns not found status' do
+        delete :destroy, params: { id: other_cart_item.id }
+
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+  end
 end

@@ -11,6 +11,15 @@ class V1::CartItemsController < ApplicationController
     end
   end
 
+  def destroy
+    cart = Cart.current_cart
+    cart_item = cart.cart_items.find(params[:id])
+
+    updated_cart = Cart::RemovePurchasableService.call(cart, cart_item)
+
+    render json: updated_cart, serializer: V1::CartSerializer
+  end
+
   private
 
   def cart_items_params
