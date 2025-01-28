@@ -18,7 +18,7 @@ docker compose up -d
 ```
 ### 4. Run database setup
 ```
-docker compose exec api rails db:setup
+docker compose exec api rails db:prepare
 ```
 ### 5. The server should be running on port 3000
 
